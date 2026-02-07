@@ -1,0 +1,9 @@
+
+{
+  "name": "Forest Apothecary",
+  "description": "L'encyclopédie numérique de la pharmacopée traditionnelle africaine validée par la science. Un pont entre sagesse ancestrale et médecine moderne.",
+  "requestFramePermissions": [
+    "camera",
+    "geolocation"
+  ]
+}

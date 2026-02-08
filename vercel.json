@@ -1,1 +1,1 @@
-{"version": 2, "builds": [{"src": "index.html", "use": "@vercel/static"}, {"src": "public/**/*", "use": "@vercel/static"}], "cleanUrls": true, "trailingSlash": false}
+{"version": 2, "builds": [{"src": "index.html", "use": "@vercel/static"}, {"src": "public/**/*", "use": "@vercel/static"}], "rewrites": [{"source": "/assets/(.*)", "destination": "/assets/$1"}, {"source": "/(.*)", "destination": "/index.html"}], "cleanUrls": true, "trailingSlash": false}

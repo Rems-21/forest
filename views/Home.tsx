@@ -13,7 +13,7 @@ export const Home: React.FC<HomeProps> = ({ onStartWiki, onStartAnalyze }) => {
       {/* Hero Section */}
       <section className="relative min-h-[500px] lg:h-[600px] flex items-center justify-center text-white overflow-hidden rounded-b-[3rem] lg:rounded-b-[4rem] shadow-2xl">
         <img 
-          src="/artemesia.jpeg" 
+          src="https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&q=80&w=1200" 
           alt="Forest Apothecary - Artemisia" 
           className="absolute inset-0 w-full h-full object-cover brightness-[0.4]"
         />

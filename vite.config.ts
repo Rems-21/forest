@@ -26,6 +26,13 @@ export default defineConfig(({ mode }) => {
       },
       build: {
         chunkSizeWarningLimit: 1000,
+        target: 'es2015',
+        rollupOptions: {
+          output: {
+            format: 'es',
+            manualChunks: undefined
+          }
+        }
       },
       plugins: [react()],
       define: {

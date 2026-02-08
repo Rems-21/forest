@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Erreur Serveur - Forest Apothecary</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #7c2d12 0%, #92400e 50%, #b45309 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        .container {
+            text-align: center;
+            max-width: 600px;
+            padding: 2rem;
+        }
+        .error-code {
+            font-size: 8rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #fbbf24, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            line-height: 1;
+        }
+        .error-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #fbbf24;
+        }
+        .error-description {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+        .plant-icon {
+            font-size: 4rem;
+            color: #fbbf24;
+            margin-bottom: 2rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: #fbbf24;
+            color: #7c2d12;
+            text-decoration: none;
+            border-radius: 2rem;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin: 0.5rem;
+        }
+        .btn:hover {
+            background: #f59e0b;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(251, 191, 36, 0.3);
+        }
+        .btn-secondary {
+            background: transparent;
+            color: #fbbf24;
+            border: 2px solid #fbbf24;
+        }
+        .btn-secondary:hover {
+            background: #fbbf24;
+            color: #7c2d12;
+        }
+        .status-info {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            backdrop-filter: blur(10px);
+        }
+        .status-info h3 {
+            color: #fbbf24;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 0.5rem 0;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .status-item:last-child {
+            border-bottom: none;
+        }
+        .status-label {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+        .status-value {
+            font-weight: 600;
+            color: #fbbf24;
+        }
+        .refresh-animation {
+            animation: rotate 2s linear infinite;
+        }
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="plant-icon">
+            <i class="fas fa-seedling"></i>
+        </div>
+        
+        <div class="error-code">500</div>
+        <h1 class="error-title">Température Inattendue</h1>
+        <p class="error-description">
+            Notre jardin numérique rencontre une difficulté temporaire. 
+            Nos herboristes travaillent à rétablir l'équilibre de la pharmacopée.
+        </p>
+        
+        <div class="status-info">
+            <h3><i class="fas fa-thermometer-half mr-2"></i>Diagnostic du Système</h3>
+            <div class="status-item">
+                <span class="status-label">État actuel</span>
+                <span class="status-value">En maintenance</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Temps de réponse</span>
+                <span class="status-value">Élevé</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Action requise</span>
+                <span class="status-value">Réessayer plus tard</span>
+            </div>
+        </div>
+        
+        <div>
+            <a href="/" class="btn">
+                <i class="fas fa-home mr-2"></i>
+                Retour à l'Accueil
+            </a>
+            <a href="javascript:location.reload()" class="btn btn-secondary">
+                <i class="fas fa-sync refresh-animation mr-2"></i>
+                Réessayer
+            </a>
+        </div>
+        
+        <div style="margin-top: 3rem; opacity: 0.7; font-size: 0.9rem;">
+            <p><i class="fas fa-clock mr-2"></i>Cette situation est généralement résolue en quelques minutes.</p>
+            <p style="margin-top: 0.5rem;"><i class="fas fa-envelope mr-2"></i>Si le problème persiste : support@forest-apothecary.com</p>
+        </div>
+    </div>
+</body>
+</html>

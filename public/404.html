@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Non Trouvée - Forest Apothecary</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #064e3b 0%, #065f46 50%, #047857 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        .container {
+            text-align: center;
+            max-width: 600px;
+            padding: 2rem;
+        }
+        .error-code {
+            font-size: 8rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #4ade80, #22c55e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            line-height: 1;
+        }
+        .error-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #4ade80;
+        }
+        .error-description {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+        .plant-icon {
+            font-size: 4rem;
+            color: #4ade80;
+            margin-bottom: 2rem;
+            animation: sway 3s ease-in-out infinite;
+        }
+        @keyframes sway {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: #4ade80;
+            color: #064e3b;
+            text-decoration: none;
+            border-radius: 2rem;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .btn:hover {
+            background: #22c55e;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(74, 222, 128, 0.3);
+        }
+        .suggestions {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .suggestions h3 {
+            color: #4ade80;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        .suggestions ul {
+            list-style: none;
+        }
+        .suggestions li {
+            margin: 0.5rem 0;
+            opacity: 0.8;
+        }
+        .suggestions a {
+            color: #4ade80;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .suggestions a:hover {
+            color: #22c55e;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="plant-icon">
+            <i class="fas fa-leaf"></i>
+        </div>
+        
+        <div class="error-code">404</div>
+        <h1 class="error-title">Plante Non Trouvée</h1>
+        <p class="error-description">
+            Cette page médicinale n'existe pas dans notre pharmacopée. 
+            La plante que vous cherchez a peut-être été déplacée ou n'a pas encore été documentée.
+        </p>
+        
+        <a href="/" class="btn">
+            <i class="fas fa-home mr-2"></i>
+            Retour à l'Accueil
+        </a>
+        
+        <div class="suggestions">
+            <h3>Que cherchiez-vous ?</h3>
+            <ul>
+                <li><a href="/wiki">🌿 Explorer notre encyclopédie</a></li>
+                <li><a href="/analyze">🔬 Identifier une plante</a></li>
+                <li><a href="/map">🗺️ Trouver un praticien</a></li>
+                <li><a href="/community">👥 Rejoindre la communauté</a></li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

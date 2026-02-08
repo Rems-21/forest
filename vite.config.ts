@@ -17,6 +17,9 @@ export default defineConfig(({ mode }) => {
           },
         },
       },
+      build: {
+        chunkSizeWarningLimit: 1000,
+      },
       plugins: [react()],
       define: {
         'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),

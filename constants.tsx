@@ -39,7 +39,7 @@ export const PLANTS: Plant[] = [
     preparation: 'Décoction de 20g de feuilles par litre d\'eau, bouillir 10 minutes.',
     precautions: 'Aucune connue en usage modéré. Éviter en cas d\'obstruction des voies biliaires.',
     status: ValidationStatus.VALIDATED,
-    imageUrl: 'https://images.unsplash.com/photo-1547826039-bfc3e4b5272b?auto=format&fit=crop&q=80&w=800',
+    imageUrl: '/kinkeliba.jpg',
     region: 'Afrique de l\'Ouest',
     accessType: AccessType.PREMIUM,
     price: 2500,
@@ -54,7 +54,7 @@ export const PLANTS: Plant[] = [
     preparation: 'Poudre de feuilles séches dans les aliments ou infusion légère.',
     precautions: 'Les racines et l\'écorce peuvent être abortives. Consommer uniquement les feuilles en cas de grossesse.',
     status: ValidationStatus.VALIDATED,
-    imageUrl: 'https://images.unsplash.com/photo-1613376023733-0a73315d9b06?auto=format&fit=crop&q=80&w=800',
+    imageUrl: '/moringa.jpg',
     region: 'Zones tropicales',
     accessType: AccessType.FREE,
     recipes: []

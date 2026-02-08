@@ -1,1 +1,1 @@
-{"version": 2, "builds": [{"src": "index.html", "use": "@vercel/static"}, {"src": "public/**/*", "use": "@vercel/static"}], "routes": [{"src": "/404", "dest": "/404.html"}, {"src": "/500", "dest": "/500.html"}, {"src": "/error", "dest": "/error.html"}, {"src": "/(.*)", "dest": "/index.html"}], "cleanUrls": true, "trailingSlash": false}
+{"version": 2, "builds": [{"src": "index.html", "use": "@vercel/static"}, {"src": "public/**/*", "use": "@vercel/static"}], "cleanUrls": true, "trailingSlash": false}

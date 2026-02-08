@@ -1,20 +1,21 @@
 
 import React, { useState, useEffect } from 'react';
-import { Plant, ValidationStatus, AccessType, Recipe } from '../types';
+import { Plant, ValidationStatus, AccessType, Recipe, AppView, UserRole } from '../types';
 import { getScientificInsights } from '../services/geminiService';
 
 interface PlantDetailProps {
   plant: Plant;
   onBack: () => void;
   user?: any;
+  setCurrentView?: (view: AppView) => void;
 }
 
-export const PlantDetail: React.FC<PlantDetailProps> = ({ plant, onBack, user }) => {
+export const PlantDetail: React.FC<PlantDetailProps> = ({ plant, onBack, user, setCurrentView }) => {
   const [insights, setInsights] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState<'heritage' | 'recipes' | 'science'>('heritage');
 
-  const hasAccess = plant.accessType === AccessType.FREE || (user && user.hasPremiumAccess);
+  const hasAccess = plant.accessType === AccessType.FREE || (user && (user.hasPremiumAccess || user.role === UserRole.ADMIN || user.role === UserRole.PRACTITIONER));
 
   useEffect(() => {
     if (activeTab === 'science' && !insights && hasAccess) {
@@ -82,7 +83,7 @@ export const PlantDetail: React.FC<PlantDetailProps> = ({ plant, onBack, user })
                <h3 className="text-2xl font-black mb-4 tracking-tighter">Accès Restreint</h3>
                <p className="font-medium text-emerald-900/70 mb-8">Débloquez les analyses moléculaires IA et les protocoles herboristes en passant Premium.</p>
                <button 
-                 onClick={() => window.location.hash = '#pricing'} // Simple way if you use router, or just use app view logic
+                 onClick={() => setCurrentView && setCurrentView('pricing')}
                  className="w-full py-5 bg-emerald-950 text-white rounded-2xl font-black uppercase tracking-widest text-xs shadow-xl hover:bg-emerald-900 transition-all"
                >
                   Découvrir nos Abonnements
@@ -150,7 +151,7 @@ export const PlantDetail: React.FC<PlantDetailProps> = ({ plant, onBack, user })
                      <h3 className="text-2xl font-black text-emerald-950 mb-4 tracking-tighter">Protocoles Réservés</h3>
                      <p className="text-sm font-medium text-gray-400 mb-10 leading-relaxed">Les recettes complètes, dosages herboristes et modes de préparation experts sont accessibles avec un pass Premium.</p>
                      <button 
-                       onClick={() => window.location.hash = '#pricing'}
+                       onClick={() => setCurrentView && setCurrentView('pricing')}
                        className="px-10 py-5 bg-emerald-950 text-white rounded-2xl font-black uppercase tracking-widest text-[10px] shadow-2xl hover:bg-lime-500 hover:text-emerald-950 transition-all"
                      >
                        S'abonner maintenant
@@ -212,7 +213,7 @@ export const PlantDetail: React.FC<PlantDetailProps> = ({ plant, onBack, user })
                       <h3 className="text-2xl font-black text-emerald-950 mb-4 tracking-tighter">Analyse Moléculaire</h3>
                       <p className="text-sm font-medium text-gray-400 mb-10 leading-relaxed">Accédez aux profils chimiques détaillés, études cliniques récentes et synthèses IA expertes réservées aux comptes Premium.</p>
                       <button 
-                        onClick={() => window.location.hash = '#pricing'}
+                        onClick={() => setCurrentView && setCurrentView('pricing')}
                         className="px-10 py-5 bg-emerald-950 text-white rounded-2xl font-black uppercase tracking-widest text-[10px] shadow-2xl hover:bg-lime-500 hover:text-emerald-950 transition-all"
                       >
                         Passer au Premium

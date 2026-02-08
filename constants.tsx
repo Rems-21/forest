@@ -11,7 +11,7 @@ export const PLANTS: Plant[] = [
     preparation: 'Infusion de feuilles séchées (5g/L) infusées pendant 15 minutes à 80°C.',
     precautions: 'À utiliser sous supervision médicale. Ne pas dépasser 7 jours de cure continue.',
     status: ValidationStatus.VALIDATED,
-    imageUrl: 'https://images.unsplash.com/photo-1628433311474-071159637230?auto=format&fit=crop&q=80&w=800',
+    imageUrl: '/artemesia.jpeg',
     region: 'Toute l\'Afrique',
     accessType: AccessType.FREE,
     recipes: [
@@ -39,10 +39,10 @@ export const PLANTS: Plant[] = [
     preparation: 'Décoction de 20g de feuilles par litre d\'eau, bouillir 10 minutes.',
     precautions: 'Aucune connue en usage modéré. Éviter en cas d\'obstruction des voies biliaires.',
     status: ValidationStatus.VALIDATED,
-    imageUrl: 'https://images.unsplash.com/photo-1596715611219-9da4122d6657?auto=format&fit=crop&q=80&w=800',
+    imageUrl: '/kinkeliba.jpeg',
     region: 'Afrique de l\'Ouest',
     accessType: AccessType.PREMIUM,
-    price: 1500,
+    price: 2500,
     recipes: []
   },
   {
@@ -54,7 +54,7 @@ export const PLANTS: Plant[] = [
     preparation: 'Poudre de feuilles séches dans les aliments ou infusion légère.',
     precautions: 'Les racines et l\'écorce peuvent être abortives. Consommer uniquement les feuilles en cas de grossesse.',
     status: ValidationStatus.VALIDATED,
-    imageUrl: 'https://images.unsplash.com/photo-1545165375-1b744b9ed444?auto=format&fit=crop&q=80&w=800',
+    imageUrl: '/moringa.jpeg',
     region: 'Zones tropicales',
     accessType: AccessType.FREE,
     recipes: []

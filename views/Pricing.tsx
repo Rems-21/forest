@@ -1,13 +1,46 @@
 
 import React from 'react';
-import { SubscriptionTier } from '../types';
+import { SubscriptionTier, UserRole } from '../types';
 
 interface PricingProps {
   onSelectPlan: (tier: SubscriptionTier) => void;
   currentTier?: SubscriptionTier;
+  user?: any;
 }
 
-export const Pricing: React.FC<PricingProps> = ({ onSelectPlan, currentTier }) => {
+export const Pricing: React.FC<PricingProps> = ({ onSelectPlan, currentTier, user }) => {
+  // Les admins et praticiens n'ont pas besoin de payer pour les abonnements
+  if (user && (user.role === UserRole.ADMIN || user.role === UserRole.PRACTITIONER)) {
+    const isAdmin = user.role === UserRole.ADMIN;
+    return (
+      <div className="max-w-7xl mx-auto px-4 py-16 animate-fade-in">
+        <div className="text-center mb-16">
+          <div className="w-20 h-20 bg-lime-100 text-lime-600 rounded-[2rem] flex items-center justify-center text-3xl mx-auto mb-8 shadow-xl">
+            <i className={`fas ${isAdmin ? 'fa-crown' : 'fa-leaf'}`}></i>
+          </div>
+          <h1 className="text-4xl md:text-6xl font-black text-emerald-900 mb-6 tracking-tighter">
+            {isAdmin ? 'Accès Administrateur' : 'Accès Botaniste'}
+          </h1>
+          <p className="text-gray-500 text-lg max-w-2xl mx-auto font-light leading-relaxed mb-8">
+            En tant que {isAdmin ? 'administrateur' : 'botaniste professionnel'}, vous avez un accès complet et gratuit à toutes les fonctionnalités premium de Forest Apothecary.
+          </p>
+          <div className="bg-lime-50 border-2 border-lime-200 rounded-[2rem] p-8 max-w-2xl mx-auto">
+            <h3 className="text-xl font-black text-emerald-900 mb-4">Vos avantages inclus:</h3>
+            <ul className="text-left space-y-3 text-gray-700">
+              <li className="flex items-center"><i className="fas fa-check text-lime-500 mr-3"></i>Accès illimité à toutes les plantes premium</li>
+              <li className="flex items-center"><i className="fas fa-check text-lime-500 mr-3"></i>Analyses biomoléculaires IA avancées</li>
+              <li className="flex items-center"><i className="fas fa-check text-lime-500 mr-3"></i>Recettes exclusives des maîtres herboristes</li>
+              <li className="flex items-center"><i className="fas fa-check text-lime-500 mr-3"></i>Support prioritaire 24/7</li>
+              <li className="flex items-center"><i className="fas fa-check text-lime-500 mr-3"></i>Accès anticipé aux nouvelles fonctionnalités</li>
+              {!isAdmin && (
+                <li className="flex items-center"><i className="fas fa-check text-lime-500 mr-3"></i>Espace professionnel personnalisé</li>
+              )}
+            </ul>
+          </div>
+        </div>
+      </div>
+    );
+  }
   const plans = [
     {
       id: SubscriptionTier.FREE,
@@ -50,7 +83,6 @@ export const Pricing: React.FC<PricingProps> = ({ onSelectPlan, currentTier }) =
       description: 'Le meilleur rapport qualité-prix pour les experts.',
       features: [
         'Tous les avantages Mensuels',
-        'Certificats de formation Forest',
         'Accès anticipé aux nouvelles fiches',
         'Support expert 24/7',
         'Économisez 30%'

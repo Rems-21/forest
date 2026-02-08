@@ -22,14 +22,26 @@ const App: React.FC = () => {
   const [currentView, setCurrentView] = useState<AppView>('home');
   const [selectedPlant, setSelectedPlant] = useState<Plant | null>(null);
   const [user, setUser] = useState<User | null>(null);
+  const [redirectAfterLogin, setRedirectAfterLogin] = useState<AppView | null>(null);
   const [selectedPlan, setSelectedPlan] = useState<SubscriptionTier | null>(null);
+
+  // Scroll to top on view change
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [currentView]);
 
   // Persistence mock
   useEffect(() => {
     const savedUser = localStorage.getItem('fa_user');
     if (savedUser) {
       try {
-        setUser(JSON.parse(savedUser));
+        const parsedUser = JSON.parse(savedUser);
+        // Les admins et praticiens ont automatiquement l'accès premium
+        if (parsedUser.role === UserRole.ADMIN || parsedUser.role === UserRole.PRACTITIONER) {
+          parsedUser.hasPremiumAccess = true;
+          parsedUser.subscriptionTier = SubscriptionTier.PREMIUM_YEARLY;
+        }
+        setUser(parsedUser);
       } catch (e) {
         localStorage.removeItem('fa_user');
       }
@@ -37,25 +49,66 @@ const App: React.FC = () => {
   }, []);
 
   const handleLogin = (u: User) => {
+    // Les admins et praticiens ont automatiquement l'accès premium
+    if (u.role === UserRole.ADMIN || u.role === UserRole.PRACTITIONER) {
+      u.hasPremiumAccess = true;
+      u.subscriptionTier = SubscriptionTier.PREMIUM_YEARLY;
+    }
+    
     setUser(u);
     localStorage.setItem('fa_user', JSON.stringify(u));
-    if (u.role === UserRole.PRACTITIONER) {
+    
+    // Redirection intelligente selon le rôle et le contexte
+    if (u.role === UserRole.ADMIN) {
+      setCurrentView('admin');
+    } else if (u.role === UserRole.PRACTITIONER) {
       setCurrentView('practitioner-dashboard');
     } else {
-      setCurrentView('home');
+      // Pour les utilisateurs standards
+      if (redirectAfterLogin) {
+        // S'il y avait une redirection en attente (ex: après clic sur paiement)
+        setCurrentView(redirectAfterLogin);
+        setRedirectAfterLogin(null);
+      } else if (selectedPlan) {
+        // S'il avait sélectionné un plan avant de se connecter
+        setCurrentView('pricing');
+      } else {
+        // Par défaut, retour à la page d'accueil
+        setCurrentView('home');
+      }
     }
   };
 
   const handleLogout = () => {
     setUser(null);
     localStorage.removeItem('fa_user');
+    setSelectedPlant(null);
+    setRedirectAfterLogin(null);
+    setSelectedPlan(null);
     setCurrentView('home');
   };
 
   const handleSelectPlant = (plant: Plant) => {
     setSelectedPlant(plant);
     setCurrentView('wiki');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Scroll to top when selecting a plant
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+  };
+
+  const handleProtectedNavigation = (targetView: AppView) => {
+    if (!user) {
+      // Sauvegarder la destination souhaitée et rediriger vers l'auth
+      setRedirectAfterLogin(targetView);
+      setCurrentView('auth');
+    } else {
+      setCurrentView(targetView);
+    }
+    // Scroll to top after navigation
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
   };
 
   const handleUpgradeSuccess = () => {
@@ -75,14 +128,14 @@ const App: React.FC = () => {
 
   const renderContent = () => {
     if (selectedPlant && currentView === 'wiki') {
-      return <PlantDetail plant={selectedPlant} user={user} onBack={() => setSelectedPlant(null)} />;
+      return <PlantDetail plant={selectedPlant} user={user} onBack={() => setSelectedPlant(null)} setCurrentView={handleProtectedNavigation} />;
     }
 
     switch (currentView) {
       case 'home':
         return <Home onStartWiki={() => setCurrentView('wiki')} onStartAnalyze={() => setCurrentView('analyze')} />;
       case 'wiki':
-        return <Wiki onSelectPlant={handleSelectPlant} />;
+        return <Wiki onSelectPlant={handleSelectPlant} setCurrentView={handleProtectedNavigation} />;
       case 'analyze':
         return <Analyze />;
       case 'map':
@@ -92,7 +145,7 @@ const App: React.FC = () => {
       case 'contribute':
         return <Contribute onBack={() => setCurrentView('home')} />;
       case 'pricing':
-        return <Pricing currentTier={user?.subscriptionTier} onSelectPlan={(tier) => {
+        return <Pricing currentTier={user?.subscriptionTier} user={user} onSelectPlan={(tier) => {
           if (!user) {
             setCurrentView('auth');
             return;

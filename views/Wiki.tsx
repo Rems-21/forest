@@ -1,15 +1,20 @@
 
 import React, { useState } from 'react';
 import { PLANTS } from '../constants';
-import { Plant, ValidationStatus } from '../types';
+import { Plant, ValidationStatus, AccessType, AppView, UserRole } from '../types';
 
 interface WikiProps {
   onSelectPlant: (plant: Plant) => void;
+  setCurrentView: (view: AppView) => void;
 }
 
-export const Wiki: React.FC<WikiProps> = ({ onSelectPlant }) => {
+export const Wiki: React.FC<WikiProps> = ({ onSelectPlant, setCurrentView }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filter, setFilter] = useState<ValidationStatus | 'ALL'>('ALL');
+
+  const handleProtectedNavigation = (targetView: AppView) => {
+    setCurrentView(targetView);
+  };
 
   const filteredPlants = PLANTS.filter(p => {
     const term = searchTerm.toLowerCase();
@@ -109,10 +114,18 @@ export const Wiki: React.FC<WikiProps> = ({ onSelectPlant }) => {
                  <h3 className="text-2xl md:text-3xl font-black text-emerald-900 leading-tight tracking-tighter group-hover:text-emerald-700 transition-colors">
                    {plant.commonName}
                  </h3>
-                 <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs shadow-lg flex-shrink-0 ${
-                   plant.status === ValidationStatus.VALIDATED ? 'bg-lime-500 text-emerald-950' : 'bg-orange-400 text-white'
-                 }`}>
-                   <i className={`fas ${plant.status === ValidationStatus.VALIDATED ? 'fa-check' : 'fa-clock'}`}></i>
+                 <div className="flex items-center gap-2">
+                   {plant.accessType === AccessType.PREMIUM && (
+                     <div className="px-3 py-1 bg-amber-100 text-amber-700 rounded-full text-[8px] font-black uppercase flex items-center">
+                       <i className="fas fa-crown mr-1"></i>
+                       PREMIUM
+                     </div>
+                   )}
+                   <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs shadow-lg flex-shrink-0 ${
+                     plant.status === ValidationStatus.VALIDATED ? 'bg-lime-500 text-emerald-950' : 'bg-orange-400 text-white'
+                   }`}>
+                     <i className={`fas ${plant.status === ValidationStatus.VALIDATED ? 'fa-check' : 'fa-clock'}`}></i>
+                   </div>
                  </div>
               </div>
               <p className="text-emerald-400 italic font-light mb-6 md:mb-8 text-sm">{plant.scientificName}</p>
@@ -125,21 +138,39 @@ export const Wiki: React.FC<WikiProps> = ({ onSelectPlant }) => {
                 ))}
               </div>
 
-              <div className="mt-auto pt-6 md:pt-8 border-t border-emerald-50 flex items-center justify-between">
-                <div className="flex -space-x-3">
-                   {[1,2,3].map(i => (
-                     <div key={i} className="w-7 h-7 md:w-8 md:h-8 rounded-full border-2 border-white bg-emerald-100 overflow-hidden">
-                       <img src={`https://i.pravatar.cc/100?u=${plant.id}${i}`} alt="Practitioner" className="w-full h-full object-cover" />
+              <div className="mt-auto pt-6 md:pt-8 border-t border-emerald-50">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex -space-x-3">
+                     {[1,2,3].map(i => (
+                       <div key={i} className="w-7 h-7 md:w-8 md:h-8 rounded-full border-2 border-white bg-emerald-100 overflow-hidden">
+                         <img src={`https://i.pravatar.cc/100?u=${plant.id}${i}`} alt="Practitioner" className="w-full h-full object-cover" />
+                       </div>
+                     ))}
+                     <div className="w-7 h-7 md:w-8 md:h-8 rounded-full border-2 border-white bg-emerald-950 text-white flex items-center justify-center text-[9px] md:text-[10px] font-bold">
+                       +5
                      </div>
-                   ))}
-                   <div className="w-7 h-7 md:w-8 md:h-8 rounded-full border-2 border-white bg-emerald-950 text-white flex items-center justify-center text-[9px] md:text-[10px] font-bold">
-                     +5
-                   </div>
+                  </div>
+                  {plant.accessType === AccessType.PREMIUM ? (
+                    <div className="flex items-center gap-2">
+                      <span className="text-amber-600 font-black text-sm">{plant.price} FCFA</span>
+                      <button 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setCurrentView('pricing');
+                        }}
+                        className="px-4 py-2 bg-amber-500 hover:bg-amber-400 text-emerald-950 font-black text-[10px] uppercase rounded-xl transition-all shadow-lg"
+                      >
+                        <i className="fas fa-lock mr-2"></i>
+                        Débloquer
+                      </button>
+                    </div>
+                  ) : (
+                    <button className="flex items-center space-x-3 text-emerald-700 font-black text-[10px] uppercase tracking-widest group/btn">
+                      <span>Détails</span>
+                      <i className="fas fa-chevron-right text-[8px] group-hover/btn:translate-x-1 transition-transform"></i>
+                    </button>
+                  )}
                 </div>
-                <button className="flex items-center space-x-3 text-emerald-700 font-black text-[10px] uppercase tracking-widest group/btn">
-                  <span>Détails</span>
-                  <i className="fas fa-chevron-right text-[8px] group-hover/btn:translate-x-1 transition-transform"></i>
-                </button>
               </div>
             </div>
           </div>

@@ -71,7 +71,7 @@ export const Footer: React.FC<FooterProps> = ({ setCurrentView }) => {
               </li>
               <li className="flex items-center space-x-3">
                 <i className="fas fa-phone text-lime-500"></i>
-                <span>+237 600 00 00 00</span>
+                <span>+237 693 29 01 35</span>
               </li>
             </ul>
           </div>

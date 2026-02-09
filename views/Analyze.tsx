@@ -15,20 +15,22 @@ export const Analyze: React.FC = () => {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setImage(reader.result as string);
-        runAnalysis();
+        const imageData = reader.result as string;
+        setImage(imageData);
+        runAnalysis(imageData);
       };
       reader.readAsDataURL(file);
     }
   };
 
-  const runAnalysis = async () => {
-    if (!image) return;
+  const runAnalysis = async (imageData?: string) => {
+    const imageToAnalyze = imageData || image;
+    if (!imageToAnalyze) return;
     
     setLoading(true);
     setAnalysis(null);
     try {
-      const result = await analyzePlantImage(image);
+      const result = await analyzePlantImage(imageToAnalyze);
       setAnalysis(result);
     } catch (err) {
       setAnalysis("Erreur de connexion. Veuillez vérifier votre image et réessayer.");

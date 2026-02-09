@@ -40,6 +40,42 @@ export const getScientificInsights = async (plantName: string) => {
   }
 };
 
+export const analyzePlantImage = async (imageBase64: string) => {
+  if (!apiKey) {
+    throw new Error('API key is not configured');
+  }
+
+  try {
+    const response = await ai.models.generateContent({
+      model: 'gemini-3-flash-preview',
+      contents: [
+        {
+          role: 'user',
+          parts: [
+            {
+              inlineData: {
+                mimeType: 'image/jpeg',
+                data: imageBase64.split(',')[1] // Remove data:image/jpeg;base64, prefix
+              }
+            },
+            {
+              text: "Voici une photo de plante. Identifie-la précisément parmi les plantes médicinales africaines. Donne moi son nom commun, scientifique, et ses propriétés médicinales majeures validées par la science."
+            }
+          ]
+        }
+      ],
+      config: {
+        systemInstruction: "Tu es l'assistant IA de Forest Apothecary, un expert en pharmacopée africaine et en botanique. Ton rôle est d'aider les utilisateurs à identifier des plantes médicinales traditionnelles africaines et à expliquer leur usage validé scientifiquement. Sois toujours prudent, mentionne que tes conseils ne remplacent pas un médecin, et alerte sur les dosages et toxicités potentielles."
+      }
+    });
+    
+    return response.text;
+  } catch (error) {
+    console.error('Error calling Gemini API for image analysis:', error);
+    throw new Error('Failed to analyze plant image');
+  }
+};
+
 export const chatWithBotanist = async (message: string, history: { role: 'user' | 'model', parts: { text: string }[] }[]) => {
   if (!apiKey) {
     throw new Error('API key is not configured');

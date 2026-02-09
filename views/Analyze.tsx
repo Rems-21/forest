@@ -1,6 +1,6 @@
 
 import React, { useState, useRef } from 'react';
-import { chatWithBotanist } from '../services/geminiService';
+import { chatWithBotanist, analyzePlantImage } from '../services/geminiService';
 
 export const Analyze: React.FC = () => {
   const [image, setImage] = useState<string | null>(null);
@@ -23,13 +23,12 @@ export const Analyze: React.FC = () => {
   };
 
   const runAnalysis = async () => {
+    if (!image) return;
+    
     setLoading(true);
     setAnalysis(null);
     try {
-      const result = await chatWithBotanist(
-        "Voici une photo de plante. Identifie-la précisément parmi les plantes médicinales africaines. Donne moi son nom commun, scientifique, et ses propriétés médicinales majeures validées par la science.",
-        []
-      );
+      const result = await analyzePlantImage(image);
       setAnalysis(result);
     } catch (err) {
       setAnalysis("Erreur de connexion. Veuillez vérifier votre image et réessayer.");
